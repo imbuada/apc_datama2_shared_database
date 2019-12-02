@@ -1,0 +1,161 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 10.10 (Ubuntu 10.10-0ubuntu0.18.04.1)
+-- Dumped by pg_dump version 12.0
+
+-- Started on 2019-12-02 14:11:28
+
+SET statement_timeout = 0;
+SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
+SET client_encoding = 'SQL_ASCII';
+SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
+SET check_function_bodies = false;
+SET xmloption = content;
+SET client_min_messages = warning;
+SET row_security = off;
+
+--
+-- TOC entry 25 (class 2615 OID 18534)
+-- Name: imbuada; Type: SCHEMA; Schema: -; Owner: datama2mi182
+--
+
+CREATE SCHEMA imbuada;
+
+
+ALTER SCHEMA imbuada OWNER TO datama2mi182;
+
+SET default_tablespace = '';
+
+--
+-- TOC entry 454 (class 1259 OID 23458)
+-- Name: buildings; Type: TABLE; Schema: imbuada; Owner: datama2mi182
+--
+
+CREATE TABLE imbuada.buildings (
+    id integer NOT NULL,
+    bldg_name text,
+    bldg_add text,
+    blg_zip text,
+    cust_fname text,
+    cust_lname text
+);
+
+
+ALTER TABLE imbuada.buildings OWNER TO datama2mi182;
+
+--
+-- TOC entry 453 (class 1259 OID 23456)
+-- Name: buildings_id_seq; Type: SEQUENCE; Schema: imbuada; Owner: datama2mi182
+--
+
+CREATE SEQUENCE imbuada.buildings_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE imbuada.buildings_id_seq OWNER TO datama2mi182;
+
+--
+-- TOC entry 4043 (class 0 OID 0)
+-- Dependencies: 453
+-- Name: buildings_id_seq; Type: SEQUENCE OWNED BY; Schema: imbuada; Owner: datama2mi182
+--
+
+ALTER SEQUENCE imbuada.buildings_id_seq OWNED BY imbuada.buildings.id;
+
+
+--
+-- TOC entry 458 (class 1259 OID 23537)
+-- Name: customers; Type: TABLE; Schema: imbuada; Owner: datama2mi182
+--
+
+CREATE TABLE imbuada.customers (
+    id integer NOT NULL,
+    cust_fname text,
+    cust_mi text,
+    cust_lname text,
+    cust_cont text,
+    cust_add text,
+    cust_eadd text,
+    cust_job text
+);
+
+
+ALTER TABLE imbuada.customers OWNER TO datama2mi182;
+
+--
+-- TOC entry 582 (class 1259 OID 24583)
+-- Name: cust_bldg; Type: VIEW; Schema: imbuada; Owner: datama2mi182
+--
+
+CREATE VIEW imbuada.cust_bldg AS
+ SELECT customers.id,
+    customers.cust_fname,
+    customers.cust_lname,
+    buildings.bldg_name,
+    buildings.blg_zip
+   FROM (imbuada.customers
+     JOIN imbuada.buildings USING (cust_lname));
+
+
+ALTER TABLE imbuada.cust_bldg OWNER TO datama2mi182;
+
+--
+-- TOC entry 3876 (class 2604 OID 23461)
+-- Name: buildings id; Type: DEFAULT; Schema: imbuada; Owner: datama2mi182
+--
+
+ALTER TABLE ONLY imbuada.buildings ALTER COLUMN id SET DEFAULT nextval('imbuada.buildings_id_seq'::regclass);
+
+
+--
+-- TOC entry 4036 (class 0 OID 23458)
+-- Dependencies: 454
+-- Data for Name: buildings; Type: TABLE DATA; Schema: imbuada; Owner: datama2mi182
+--
+
+COPY imbuada.buildings (id, bldg_name, bldg_add, blg_zip, cust_fname, cust_lname) FROM stdin;
+1	net lima	taguig	1630	angelika	pineda
+2	APC	makati	1232	irwin	buada
+3	uptown	taguig	1630	angelika	pineda
+4	uptown	taguig	1226	felix	pedro
+\.
+
+
+--
+-- TOC entry 4037 (class 0 OID 23537)
+-- Dependencies: 458
+-- Data for Name: customers; Type: TABLE DATA; Schema: imbuada; Owner: datama2mi182
+--
+
+COPY imbuada.customers (id, cust_fname, cust_mi, cust_lname, cust_cont, cust_add, cust_eadd, cust_job) FROM stdin;
+1	irwin	m	buada	091660188387	pasay	imbuada	student
+2	angelika	l	pineda	09123456789	san pedro	alpineda	manager
+3	felix	l	pedro	09164544783	paranaque	flpedro	instructor
+4	emily	v	teodoro	0922596969	makati	evteodoro	miipai
+\.
+
+
+--
+-- TOC entry 4044 (class 0 OID 0)
+-- Dependencies: 453
+-- Name: buildings_id_seq; Type: SEQUENCE SET; Schema: imbuada; Owner: datama2mi182
+--
+
+SELECT pg_catalog.setval('imbuada.buildings_id_seq', 1, false);
+
+
+-- Completed on 2019-12-02 14:11:28
+
+--
+-- PostgreSQL database dump complete
+--
+
