@@ -1,0 +1,27 @@
+
+-- Drop table
+
+-- DROP TABLE imbuada.buildings;
+
+CREATE TABLE MI182_IMBUADA.BUILDINGS (
+	id NUMBER NOT NULL, 
+	bldg_name VARCHAR2(50),
+	bldg_add VARCHAR2(50),
+	blg_zip VARCHAR2(50),
+	cust_fname VARCHAR2(50),
+	cust_lname VARCHAR2(50),
+	CONSTRAINT bldg_pk PRIMARY KEY (id)
+);
+
+
+CREATE TABLE MI182_IMBUADA.CUSTOMERS (
+    id NUMBER GENERATED ALWAYS AS IDENTITY NOT NULL,
+    cust_fname VARCHAR2(50) NOT NULL,
+    cust_mi VARCHAR2(50),
+    cust_lname VARCHAR2(50),
+    cust_cont VARCHAR2(50),
+    cust_add VARCHAR2(50),
+    cust_eadd VARCHAR2(50),
+    cust_job VARCHAR2(50)
+    CONSTRAINT cust_pk PRIMARY KEY(cust_lname)
+);
